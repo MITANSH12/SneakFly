@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        #product-details {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+        }
+
+        #product-image {
+            margin-left: -1600px;
+            height: 600px;
+            width: 600px;
+            margin-bottom: 300px;
+        }
+
+        #product-image2 {
+            margin-left: -900px;
+            height: 800px;
+            width: 800px;
+            margin-bottom: -800px;
+        }
+
+        .color-option {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin: 0 10px;
+            cursor: pointer;
+            margin-right: 100px;
+        }
+
+        #product-desc {
+            width: 50%;
+            margin-bottom: -250px;
+            margin-right: -300px;
+            text-align: right;
+            font-size: 16px;
+        }
+
+        #size {
+            width: 350px;
+            height: 45px;
+            border: 2px solid black;
+            border-radius: 5px;
+            font-size: larger;
+        }
+
+        #size:hover {
+            color: white;
+            background-color: black;
+        }
+
+        #size-options {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        #add-to-cart-button {
+            background-color: #ffffff;
+            color: black;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 2px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 350px;
+        }
+
+        #add-to-cart-button:hover {
+            background-color: black;
+            color: white;
+        }
+
+        #back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #product-main {
+            margin-left: 720px;
+            margin-bottom: 400px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <span id="back-button" class="glyphicon glyphicon-arrow-left" onclick="goBack()"></span>
+
+    <div id="product-details">
+        <div id="product-main">
+            <h2 id="product-name" style="font-weight: bold;">Jordan 4 Retro Thunder</h2>
+            <div class="color-option" style="background-color: red;" onclick="changeProduct('red')"></div>
+            <div class="color-option" style="background-color: yellow;" onclick="changeProduct('yellow')"></div>
+            <!-- Blue color option removed -->
+            <div id="size-options">
+                <select id="size" onchange="clrLbl()">
+                    <option value="size-4">UK 4</option>
+                    <option value="size-5">UK 5</option>
+                    <option value="size-6">UK 6</option>
+                    <option value="size-7">UK 7</option>
+                    <option value="size-8">UK 8</option>
+                    <option value="size-9">UK 9</option>
+                    <option value="size-10">UK 10</option>
+                    <option value="size-11">UK 11</option>
+                    <option value="size-12">UK 12</option>
+                </select>
+            </div>
+            <button id="add-to-cart-button" onclick="addToCart()">Add to Cart</button>
+        </div>
+        <img id="product-image" src="jordan4retrothunder_yellow.png" alt="Jordan 4 Retro Thunder">
+        <img id="product-image2" src="jordan4retrothunder_yellow2.png" alt="Jordan 4 Retro Thunder">
+        <div id="product-desc">
+            <p>
+                The Jordan 4 Retro Thunder is an iconic sneaker known for its bold design and striking colorway. Featuring a mix of black and yellow accents, this sneaker combines style and comfort. The signature Air cushioning provides excellent support, making it a favorite among sneaker enthusiasts. With its distinctive appearance and legendary heritage, the Jordan 4 Retro Thunder remains a coveted choice for both casual wear and sneaker collections.</p>
+            <p id="size-lbl" style="text-align: left; font-weight: bold; margin-top: 100px;">Size:size-4</p>
+            <p id="clr-lbl" style="text-align: left; font-weight: bold;">Color: Yellow</p>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+
+</body>
+
+</html>

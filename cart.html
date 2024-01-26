@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Shopping Cart</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            text-align: center;
+        }
+    
+        h1 {
+            font-size: 40px;
+            color: grey;
+            margin-top: 20px;
+        }
+    
+        #cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        #cart-table th {
+        padding: 15px;
+        text-align: left;
+        position: sticky;
+        top: 0;
+        background-color: #fff; /* Background color for the heading row */
+        z-index: 1; /* Ensure it's above the cart items */
+    }
+    
+        #cart-table th, #cart-table td {
+            padding: 15px;
+            text-align: left;
+        }
+    
+        .cart-item {
+            border: 1px solid #ccc;
+            transition: background-color 0.3s;
+        }
+    
+        .cart-item img {
+            width: 60px;
+            height: auto;
+            margin-right: 15px;
+        }
+    
+        .cart-item-text {
+            font-weight: bold;
+            font-size: 18px;
+        }
+    
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+        }
+    
+        .quantity-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+    
+        .remove-button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    
+        .empty-cart-message {
+            font-size: 40px;
+            color: grey;
+            margin-top: 20%;
+        }
+    
+        .cart-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        #empty-cart {
+            font-size: 40px;
+            font-weight: bold;
+            color: #777;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin-right: -1100px;
+            margin-top: -250px;
+        }
+    </style>
+</head>
+<body style="position: relative;">
+
+    <h1>Your Shopping Cart</h1>
+    <button id="back-button" class="btn btn-default" style="position: absolute; top: 10px; left: 10px;">
+        <span class="glyphicon glyphicon-arrow-left"></span> Back
+    </button>
+
+    <!-- Cart items will be dynamically added here -->
+    <table id="cart-table">
+        <thead>
+            <tr>
+                <th>Product Image</th>
+                <th>Product Name</th>
+                <th>Product Color</th>
+                <th>Product Size</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="cart-items"></tbody>
+    </table>
+    <script>
+        // Initialize cartItems as an empty array
+        var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+        function makeEditable(index) {
+            var quantityElement = document.getElementById(`quantity-${index}`);
+            var quantityEditElement = document.getElementById(`quantity-edit-${index}`);
+
+            quantityElement.style.display = 'none';
+            quantityEditElement.style.display = 'inline-block';
+            quantityEditElement.value = quantityElement.innerText;
+            quantityEditElement.focus();
+        }
+
+        function updateQuantity(index) {
+            var quantityElement = document.getElementById(`quantity-${index}`);
+            var quantityEditElement = document.getElementById(`quantity-edit-${index}`);
+
+            var quantity = parseInt(quantityEditElement.value);
+            quantity = isNaN(quantity) ? 1 : Math.max(1, quantity);
+
+            // Update the quantity in the cartItems array
+            cartItems[index].quantity = quantity;
+
+            // Update the quantity in the display
+            quantityElement.innerText = quantity;
+            quantityElement.style.display = 'inline-block';
+            quantityEditElement.style.display = 'none';
+
+            updateCart();
+        }
+
+        function incrementQuantity(index) {
+            cartItems[index].quantity += 1;
+            renderCartItems();
+            updateCart();
+        }
+
+        function decrementQuantity(index) {
+            cartItems[index].quantity = Math.max(1, cartItems[index].quantity - 1);
+            renderCartItems();
+            updateCart();
+        }
+
+        function removeFromCart(index) {
+            cartItems.splice(index, 1);
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            renderCartItems();
+            updateCartDisplay();
+        }
+
+        function updateCart() {
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            renderCartItems();
+        }
+
+        function renderCartItems() {
+    var cartTable = document.getElementById('cart-items');
+    cartTable.innerHTML = ''; // Clear the existing items
+
+    if (cartItems.length === 0) {
+        cartTable.innerHTML = '<tr><td colspan="7" id="empty-cart">Your cart is empty</td></tr>';
+    } else {
+        for (var i = 0; i < cartItems.length; i++) {
+            var item = cartItems[i];
+            
+            // Check if color and size are defined
+            var color = item.color ? item.color.toLowerCase() : 'N/A';
+            var size = item.size || 'N/A';
+
+            // Define the image source based on the color
+            var imageSource = `jordan4retrothunder_${color}.png`;
+
+            var itemRow = document.createElement('tr');
+            itemRow.classList.add('cart-item');
+            itemRow.innerHTML = `
+                <td><img src="${imageSource}" alt="${item.name}"></td>
+                <td class="cart-item-text">${item.name}</td>
+                <td class="cart-item-text">${color}</td>
+                <td class="cart-item-text">${size}</td>
+                <td class="cart-item-text">
+                    <div class="quantity-controls">
+                        <button class="quantity-button" onclick="decrementQuantity(${i})">-</button>
+                        <span class="cart-item-text" id="quantity-${i}" ondblclick="makeEditable(${i})">${item.quantity}</span>
+                        <input type="text" id="quantity-edit-${i}" onblur="updateQuantity(${i})" style="display: none;" />
+                        <button class="quantity-button" onclick="incrementQuantity(${i})">+</button>
+                    </div>
+                </td>
+                <td class="cart-item-text">$${item.quantity * item.price}</td>
+                <td class="cart-item-text"><button class="remove-button" onclick="removeFromCart(${i})">Remove</button></td>
+            `;
+            cartTable.appendChild(itemRow);
+        }
+    }
+}
+
+
+        // Initial rendering
+        renderCartItems();
+        document.getElementById('back-button').addEventListener('click', function() {
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>
