@@ -20,10 +20,11 @@
         }
 
         #cart-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    overflow-x: auto;
+}
 
         #cart-table th {
             padding: 15px;
@@ -104,14 +105,15 @@
         }
 
         @media (max-width: 768px) {
-            .quantity-controls {
-                flex-direction: column;
-            }
+    #cart-table th,
+    #cart-table td {
+        white-space: nowrap;
+    }
+}
 
             .quantity-button {
                 margin: 5px 0;
             }
-        }
     </style>
 </head>
 
