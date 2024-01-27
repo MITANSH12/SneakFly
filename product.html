@@ -101,10 +101,34 @@
             margin-left: 720px;
             margin-bottom: 400px;
         }
+
+        @media (max-width: 768px) {
+            #product-details {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            #product-image,
+            #product-image2 {
+                margin-left: 0;
+                width: 100%;
+                max-width: none;
+                margin-bottom: 20px;
+            }
+
+            #product-desc {
+                width: 100%;
+                margin-right: 0;
+            }
+
+            #product-main {
+                margin-left: 0;
+            }
+        }
     </style>
 </head>
 
-<body>
+<body class="container">
 
     <span id="back-button" class="glyphicon glyphicon-arrow-left" onclick="goBack()"></span>
 
@@ -115,7 +139,7 @@
             <div class="color-option" style="background-color: yellow;" onclick="changeProduct('yellow')"></div>
             <!-- Blue color option removed -->
             <div id="size-options">
-                <select id="size" onchange="clrLbl()">
+                <select id="size" onchange="clrLbl()" class="form-control">
                     <option value="size-4">UK 4</option>
                     <option value="size-5">UK 5</option>
                     <option value="size-6">UK 6</option>
@@ -127,14 +151,19 @@
                     <option value="size-12">UK 12</option>
                 </select>
             </div>
-            <button id="add-to-cart-button" onclick="addToCart()">Add to Cart</button>
+            <button id="add-to-cart-button" onclick="addToCart()" class="btn btn-primary">Add to Cart</button>
         </div>
         <img id="product-image" src="jordan4retrothunder_yellow.png" alt="Jordan 4 Retro Thunder">
         <img id="product-image2" src="jordan4retrothunder_yellow2.png" alt="Jordan 4 Retro Thunder">
         <div id="product-desc">
             <p>
-                The Jordan 4 Retro Thunder is an iconic sneaker known for its bold design and striking colorway. Featuring a mix of black and yellow accents, this sneaker combines style and comfort. The signature Air cushioning provides excellent support, making it a favorite among sneaker enthusiasts. With its distinctive appearance and legendary heritage, the Jordan 4 Retro Thunder remains a coveted choice for both casual wear and sneaker collections.</p>
-            <p id="size-lbl" style="text-align: left; font-weight: bold; margin-top: 100px;">Size:size-4</p>
+                The Jordan 4 Retro Thunder is an iconic sneaker known for its bold design and striking colorway.
+                Featuring a mix of black and yellow accents, this sneaker combines style and comfort. The signature Air
+                cushioning provides excellent support, making it a favorite among sneaker enthusiasts. With its
+                distinctive appearance and legendary heritage, the Jordan 4 Retro Thunder remains a coveted choice for
+                both casual wear and sneaker collections.
+            </p>
+            <p id="size-lbl" style="text-align: left; font-weight: bold; margin-top: 20px;">Size:size-4</p>
             <p id="clr-lbl" style="text-align: left; font-weight: bold;">Color: Yellow</p>
         </div>
     </div>

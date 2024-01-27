@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,53 +12,55 @@
         body {
             text-align: center;
         }
-    
+
         h1 {
             font-size: 40px;
             color: grey;
             margin-top: 20px;
         }
-    
+
         #cart-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
+
         #cart-table th {
-        padding: 15px;
-        text-align: left;
-        position: sticky;
-        top: 0;
-        background-color: #fff; /* Background color for the heading row */
-        z-index: 1; /* Ensure it's above the cart items */
-    }
-    
-        #cart-table th, #cart-table td {
+            padding: 15px;
+            text-align: left;
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            z-index: 1;
+        }
+
+        #cart-table th,
+        #cart-table td {
             padding: 15px;
             text-align: left;
         }
-    
+
         .cart-item {
             border: 1px solid #ccc;
             transition: background-color 0.3s;
         }
-    
+
         .cart-item img {
             width: 60px;
             height: auto;
             margin-right: 15px;
         }
-    
+
         .cart-item-text {
             font-weight: bold;
             font-size: 18px;
         }
-    
+
         .quantity-controls {
             display: flex;
             align-items: center;
         }
-    
+
         .quantity-button {
             background-color: #007bff;
             color: #fff;
@@ -67,7 +70,7 @@
             cursor: pointer;
             margin: 0 5px;
         }
-    
+
         .remove-button {
             background-color: #dc3545;
             color: #fff;
@@ -76,13 +79,13 @@
             font-size: 14px;
             cursor: pointer;
         }
-    
+
         .empty-cart-message {
             font-size: 40px;
             color: grey;
             margin-top: 20%;
         }
-    
+
         .cart-item:hover {
             background-color: #f0f0f0;
         }
@@ -99,8 +102,19 @@
             margin-right: -1100px;
             margin-top: -250px;
         }
+
+        @media (max-width: 768px) {
+            .quantity-controls {
+                flex-direction: column;
+            }
+
+            .quantity-button {
+                margin: 5px 0;
+            }
+        }
     </style>
 </head>
+
 <body style="position: relative;">
 
     <h1>Your Shopping Cart</h1>
@@ -180,51 +194,51 @@
         }
 
         function renderCartItems() {
-    var cartTable = document.getElementById('cart-items');
-    cartTable.innerHTML = ''; // Clear the existing items
+            var cartTable = document.getElementById('cart-items');
+            cartTable.innerHTML = ''; // Clear the existing items
 
-    if (cartItems.length === 0) {
-        cartTable.innerHTML = '<tr><td colspan="7" id="empty-cart">Your cart is empty</td></tr>';
-    } else {
-        for (var i = 0; i < cartItems.length; i++) {
-            var item = cartItems[i];
-            
-            // Check if color and size are defined
-            var color = item.color ? item.color.toLowerCase() : 'N/A';
-            var size = item.size || 'N/A';
+            if (cartItems.length === 0) {
+                cartTable.innerHTML = '<tr><td colspan="7" id="empty-cart">Your cart is empty</td></tr>';
+            } else {
+                for (var i = 0; i < cartItems.length; i++) {
+                    var item = cartItems[i];
 
-            // Define the image source based on the color
-            var imageSource = `jordan4retrothunder_${color}.png`;
+                    // Check if color and size are defined
+                    var color = item.color ? item.color.toLowerCase() : 'N/A';
+                    var size = item.size || 'N/A';
 
-            var itemRow = document.createElement('tr');
-            itemRow.classList.add('cart-item');
-            itemRow.innerHTML = `
-                <td><img src="${imageSource}" alt="${item.name}"></td>
-                <td class="cart-item-text">${item.name}</td>
-                <td class="cart-item-text">${color}</td>
-                <td class="cart-item-text">${size}</td>
-                <td class="cart-item-text">
-                    <div class="quantity-controls">
-                        <button class="quantity-button" onclick="decrementQuantity(${i})">-</button>
-                        <span class="cart-item-text" id="quantity-${i}" ondblclick="makeEditable(${i})">${item.quantity}</span>
-                        <input type="text" id="quantity-edit-${i}" onblur="updateQuantity(${i})" style="display: none;" />
-                        <button class="quantity-button" onclick="incrementQuantity(${i})">+</button>
-                    </div>
-                </td>
-                <td class="cart-item-text">$${item.quantity * item.price}</td>
-                <td class="cart-item-text"><button class="remove-button" onclick="removeFromCart(${i})">Remove</button></td>
-            `;
-            cartTable.appendChild(itemRow);
+                    // Define the image source based on the color
+                    var imageSource = `jordan4retrothunder_${color}.png`;
+
+                    var itemRow = document.createElement('tr');
+                    itemRow.classList.add('cart-item');
+                    itemRow.innerHTML = `
+                        <td><img src="${imageSource}" alt="${item.name}"></td>
+                        <td class="cart-item-text">${item.name}</td>
+                        <td class="cart-item-text">${color}</td>
+                        <td class="cart-item-text">${size}</td>
+                        <td class="cart-item-text">
+                            <div class="quantity-controls">
+                                <button class="quantity-button" onclick="decrementQuantity(${i})">-</button>
+                                <span class="cart-item-text" id="quantity-${i}" ondblclick="makeEditable(${i})">${item.quantity}</span>
+                                <input type="text" id="quantity-edit-${i}" onblur="updateQuantity(${i})" style="display: none;" />
+                                <button class="quantity-button" onclick="incrementQuantity(${i})">+</button>
+                            </div>
+                        </td>
+                        <td class="cart-item-text">$${item.quantity * item.price}</td>
+                        <td class="cart-item-text"><button class="remove-button" onclick="removeFromCart(${i})">Remove</button></td>
+                    `;
+                    cartTable.appendChild(itemRow);
+                }
+            }
         }
-    }
-}
-
 
         // Initial rendering
         renderCartItems();
-        document.getElementById('back-button').addEventListener('click', function() {
+        document.getElementById('back-button').addEventListener('click', function () {
             window.location.href = 'index.html';
         });
     </script>
 </body>
+
 </html>
